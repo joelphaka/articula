@@ -94,4 +94,5 @@ return [
         public_path('storage') => storage_path('app/public'),
     ],
 
+    'maxFilesize' => is_numeric(env('MAX_FILESIZE')) ? (int)env('MAX_FILESIZE') : 2048,
 ];

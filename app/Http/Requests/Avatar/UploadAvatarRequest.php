@@ -10,18 +10,21 @@ class UploadAvatarRequest extends FormRequest
 {
     public function rules()
     {
+        $maxFilesize = config('filesystems.maxFilesize');
+
         return [
-            'avatar'=> 'required|image|mimes:jpeg,png|max:2048'
+            'avatar'=> "required|mimetypes:image/jpeg,image/png|max:{$maxFilesize}"
         ];
     }
 
     public function messages()
     {
+        $filesizeInMegabytes = config('filesystems.maxFilesize') / 1024;
+
         return [
             'avatar.required' => 'Please choose an image.',
-            'avatar.image' => 'The file must be an image of type jpeg or png.',
-            'avatar.mimes' => 'The file must be an image of type jpeg or png.',
-            'avatar.max' => 'The file may not be greater than 2MB'
+            'avatar.mimetypes' => 'The file must be an image of type jpeg or png.',
+            'avatar.max' => "The file may not be greater than {$filesizeInMegabytes}MB"
         ];
     }
 }
