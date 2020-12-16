@@ -104,6 +104,7 @@ class ArticleController extends Controller
     {
         $article->views = !is_numeric($article->views) ? 0 : (int)$article->views;
         $article->views++;
+        $article->timestamps = false;
 
         $article->save();
 
