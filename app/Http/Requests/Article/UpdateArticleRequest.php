@@ -16,7 +16,8 @@ class UpdateArticleRequest extends FormRequest
         return [
             'title' => 'sometimes|required|min:6|max:60',
             'content' => 'sometimes|required|min:40',
-            'cover_photo' => "sometimes|required|mimetypes:image/jpeg,image/png|max:{$maxFilesize}"
+            'cover_photo' => "sometimes|required|mimetypes:image/jpeg,image/png|max:{$maxFilesize}",
+            'remove_cover_photo' => 'sometimes'
         ];
     }
 
