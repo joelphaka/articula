@@ -78,7 +78,11 @@ class ArticleController extends Controller
 
         if (count($data)) $article->update($data);
 
-        $article = $this->saveCoverPhoto($request, $article);
+        if ((bool)$request->input('remove_cover_photo')) {
+            $article = $this->removeCoverPhoto($article);
+        } else {
+            $article = $this->saveCoverPhoto($request, $article);
+        }
 
         return response()->json($article, 200);
     }
@@ -93,6 +97,12 @@ class ArticleController extends Controller
     {
         if (!$article->user->isAuthUser()) {
             return response()->json('Forbidden', 403);
+        }
+
+        $filename = $article->hashid() . '.png';
+
+        if (Storage::disk('articles')->exists($filename)) {
+            Storage::disk('articles')->delete($filename);
         }
 
         $article->delete();
@@ -137,21 +147,15 @@ class ArticleController extends Controller
         }
 
         $filename = $article->hashid() . '.png';
-        $isRemoved = false;
 
         if (Storage::disk('articles')->exists($filename)) {
             Storage::disk('articles')->delete($filename);
 
             $article->has_cover_photo = false;
             $article->save();
-            $isRemoved = !$article->has_cover_photo;
         }
 
-        return response()->json([
-            'is_removed' => $isRemoved,
-            'message' => $isRemoved ? 'Cover photo removed' : 'Could not remove cover photo',
-            'article' => $article
-        ]);
+        return $article;
     }
 
     /**
