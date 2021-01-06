@@ -19,7 +19,6 @@ class CreateUsersTable extends Migration
             $table->string('last_name');
             $table->enum('gender', ['0', '1'])->nullable();
             $table->string('bio')->nullable();
-            // $table->string('avatar')->nullable();
             $table->boolean('has_avatar')->nullable();
             $table->string('username', 64)->unique();
             $table->string('email', 128)->unique();

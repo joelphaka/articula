@@ -43,6 +43,7 @@ class ArticleController extends Controller
         $article->save();
 
         $article = $this->saveCoverPhoto($request, $article);
+        $article = Article::find($article->id);
 
         return response()->json($article, 201);
     }

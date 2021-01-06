@@ -4,6 +4,7 @@
 namespace App\Http\Controllers\Api;
 
 use App\Article;
+use App\Comment;
 use App\Http\Controllers\Controller;
 use App\Like;
 use App\UsArticle;
@@ -22,11 +23,7 @@ class LikeController extends Controller
             ]);
 
             $like->save();
-
-            //return response()->json($like->likeable());
         }
-
-        //return response()->json(['message' => 'Article already liked'], 403);
 
         return response()->json($article->refresh());
     }
@@ -46,7 +43,37 @@ class LikeController extends Controller
         }
 
         return response()->json($article->refresh());
+    }
 
-        ///return response()->json(['message' => 'Article not liked'], 403);
+    public function likeComment(Comment $comment)
+    {
+        if (!auth()->user()->hasLiked($comment)) {
+            $like = new Like([
+                'likeable_type' => Comment::class,
+                'likeable_id' => $comment->id,
+                'user_id' => auth()->id()
+            ]);
+
+            $like->save();
+        }
+
+        return response()->json($comment->refresh());
+    }
+
+    public function unlikeComment(Comment $comment)
+    {
+        if (auth()->user()->hasLiked($comment)) {
+
+            $like = auth()->user()
+                ->likes()
+                ->where('likeable_type', Comment::class)
+                ->where('likeable_id', $comment->id);
+
+            $like->delete();
+
+            return response()->json($comment->refresh());
+        }
+
+        return response()->json($comment->refresh());
     }
 }

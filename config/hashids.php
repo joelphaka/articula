@@ -51,6 +51,10 @@ return [
             'salt' => \App\Article::class . 'bf01d1091e09bcde90b1da7b88d0af9bcebc709d81507bf2e807637c768491eb7c45b9ef25d301beb1a8ba2252e0752302221e84cedf2a594c878a6e4afd7363',
             'length' => 8,
         ],
+        \App\Comment::class => [
+            'salt' => \App\Comment::class . 'e762d32fef4f1d1cbcb5d6940d5e840124ec7e7697c4a858948b28468b55bc059749d167265138313e7de4855a27ce2600fba70c79cde224b6ce2295f87f446d',
+            'length' => 8,
+        ],
 
     ],
 

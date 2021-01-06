@@ -4,7 +4,7 @@ use Illuminate\Database\Migrations\Migration;
 use Illuminate\Database\Schema\Blueprint;
 use Illuminate\Support\Facades\Schema;
 
-class AddLikeableUsersRelationship extends Migration
+class AddCommentsCommentsRelationship extends Migration
 {
     /**
      * Run the migrations.
@@ -13,13 +13,12 @@ class AddLikeableUsersRelationship extends Migration
      */
     public function up()
     {
-        Schema::table('likeable', function (Blueprint $table) {
-            $table->foreign('user_id')
+        Schema::table('comments', function (Blueprint $table) {
+            $table->foreign('parent_id')
                 ->references('id')
-                ->on('users')
-                ->onDelete('CASCADE');
-        });
-    }
+                ->on('comments')
+                ->onDelete('cascade');
+        });    }
 
     /**
      * Reverse the migrations.
@@ -28,8 +27,8 @@ class AddLikeableUsersRelationship extends Migration
      */
     public function down()
     {
-        Schema::table('likeable', function (Blueprint $table) {
-            $table->dropForeign(['user_id']);
+        Schema::table('comments', function (Blueprint $table) {
+            $table->dropForeign(['parent_id']);
         });
     }
 }

@@ -50,7 +50,7 @@ class User extends Authenticatable
         'has_avatar' => 'boolean'
     ];
 
-    protected $withCount = ['articles'];
+    protected $withCount = ['articles', 'comments'];
 
     protected $appends = [
         'isAuthUser' => 'is_auth_user',
@@ -67,6 +67,11 @@ class User extends Authenticatable
     public function articles()
     {
         return $this->hasMany(Article::class);
+    }
+
+    public function comments()
+    {
+        return $this->hasMany(Comment::class);
     }
 
     public function likes()

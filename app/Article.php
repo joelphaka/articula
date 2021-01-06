@@ -25,7 +25,7 @@ class Article extends Model
 
     protected $with = ['user'];
 
-    protected $withCount = ['likes'];
+    protected $withCount = ['likes', 'comments'];
 
     protected $appends = [
         'hashid',
@@ -41,6 +41,11 @@ class Article extends Model
     public function user()
     {
         return $this->belongsTo(User::class);
+    }
+
+    public function comments()
+    {
+        return $this->hasMany(Comment::class);
     }
 
     public function likes()

@@ -30,7 +30,7 @@ class AddArticlesUsersRelationship extends Migration
     public function down()
     {
         Schema::table('articles', function (Blueprint $table) {
-            $table->dropForeign('user_id');
+            $table->dropForeign(['user_id']);
         });
     }
 }

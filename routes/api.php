@@ -21,10 +21,9 @@ Route::middleware('auth:api')->group(function () {
     Route::post('/logout', 'Api\AuthController@logout');
 
     // Articles
-    // Route::apiResource('/articles', 'Api\ArticleController')->except(['create', 'edit']);
     Route::get('/articles', 'Api\ArticleController@index');
-    Route::get('/articles/{article}', 'Api\ArticleController@show');
     Route::post('/articles', 'Api\ArticleController@store');
+    Route::get('/articles/{article}', 'Api\ArticleController@show');
     Route::post('/articles/{article}', 'Api\ArticleController@update');
     Route::delete('/articles/{article}', 'Api\ArticleController@destroy');
 
@@ -33,6 +32,8 @@ Route::middleware('auth:api')->group(function () {
     // Likes
     Route::post('/likes/like/article/{article}', 'Api\LikeController@likeArticle');
     Route::post('/likes/unlike/article/{article}', 'Api\LikeController@unlikeArticle');
+    Route::post('/likes/like/comment/{comment}', 'Api\LikeController@likeComment');
+    Route::post('/likes/unlike/comment/{comment}', 'Api\LikeController@unlikeComment');
 
     // Profile
     Route::get('/profile/{user}', 'Api\ProfileController@index');
@@ -46,9 +47,19 @@ Route::middleware('auth:api')->group(function () {
     Route::post('/avatars', 'Api\AvatarController@store');
     Route::delete('/avatars', 'Api\AvatarController@destroy');
 
+    // Comments
+    Route::get('/comments', 'Api\CommentController@index');
+    Route::get('/comments/{comment}', 'Api\CommentController@show');
+    Route::post('/comments/{article}', 'Api\CommentController@store');
+    Route::put('/comments/{comment}', 'Api\CommentController@update');
+    Route::delete('/comments/{comment}', 'Api\CommentController@destroy');
+    Route::get('/comments/article/{article}', 'Api\CommentController@getArticleComments');
+    Route::get('/comments/replies/{comment}','Api\CommentController@getReplies');
+    Route::post('/comments/reply/{comment}', 'Api\CommentController@replyToComment');
 
 });
 
 // Auth
 Route::post('/login', 'Api\AuthController@login');
 Route::post('/register', 'Api\AuthController@register');
+

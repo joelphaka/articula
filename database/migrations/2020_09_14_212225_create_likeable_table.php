@@ -15,8 +15,8 @@ class CreateLikeableTable extends Migration
     {
         Schema::create('likeable', function (Blueprint $table) {
             $table->id();
-            $table->bigInteger('user_id')->unsigned();
-            $table->bigInteger('likeable_id')->unsigned();
+            $table->unsignedBigInteger('user_id');
+            $table->unsignedBigInteger('likeable_id');
             $table->string('likeable_type');
             $table->timestamps();
         });
