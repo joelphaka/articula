@@ -40,7 +40,7 @@ Route::middleware('auth:api')->group(function () {
     Route::get('/timeline/articles/{user}/', 'Api\ProfileController@articlesTimeline');
 
     // Search
-    Route::get('/search/people', 'Api\SearchController@searchUsers');
+    Route::get('/search/users', 'Api\SearchController@searchUsers');
     Route::get('/search/articles', 'Api\SearchController@searchArticles');
 
     // Avatar
