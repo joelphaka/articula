@@ -9,6 +9,7 @@ use App\Http\Controllers\Controller;
 use App\Http\Requests\Comment\CreateCommentRequest;
 use App\Http\Requests\Comment\ReplyToCommentRequest;
 use App\Http\Requests\Comment\UpdateCommentRequest;
+use App\Like;
 
 class CommentController extends Controller
 {
@@ -87,6 +88,10 @@ class CommentController extends Controller
         }
 
         $comment->delete();
+
+        Like::where('likeable_type', Comment::class)
+            ->where('likeable_id', $comment->id)
+            ->delete();
 
         return response()->json($comment, 200);
     }

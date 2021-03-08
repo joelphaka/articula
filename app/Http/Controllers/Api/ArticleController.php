@@ -8,6 +8,7 @@ use App\Http\Controllers\Controller;
 use App\Http\Requests\Article\CreateArticleRequest;
 use App\Http\Requests\Article\UpdateArticleRequest;
 use App\Http\Requests\Article\UploadCoverPhotoRequest;
+use App\Like;
 use Illuminate\Support\Facades\Request;
 use Illuminate\Support\Facades\Storage;
 
@@ -100,13 +101,17 @@ class ArticleController extends Controller
             return response()->json('Forbidden', 403);
         }
 
-        $filename = $article->hashid() . '.png';
-
-        if (Storage::disk('articles')->exists($filename)) {
-            Storage::disk('articles')->delete($filename);
-        }
+        $coverPhotoFileName = $article->hashid() . '.png';
 
         $article->delete();
+
+        Like::where('likeable_type', Article::class)
+            ->where('likeable_id', $article->id)
+            ->delete();
+
+        if (Storage::disk('articles')->exists($coverPhotoFileName)) {
+            Storage::disk('articles')->delete($coverPhotoFileName);
+        }
 
         return response()->json($article, 200);
     }

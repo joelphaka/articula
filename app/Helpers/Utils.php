@@ -96,6 +96,9 @@ class Utils
 
         if (isset($meta['data'])) unset($meta['data']);
 
+        $meta['is_last_page'] = $meta['current_page'] == $meta['last_page'];
+        $meta['has_more_pages'] = $meta['current_page'] < $meta['last_page'];
+
         return [
             'meta' => $meta,
             'data' => $data
